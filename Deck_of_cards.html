@@ -1,0 +1,74 @@
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Deck of Cards</title>
+    <script>
+      function DeckConstructor(){
+        //52 cards
+        this.deck = ["AH", "2H", "3H", "4H", "5H", "6H", "7H", "8H", "9H", "10H", "JH", "QH", "KH",
+                        "AS", "2S", "3S", "4S", "5S", "6S", "7S", "8S", "9S", "10S", "JS", "QS", "KS",
+                        "AC", "2C", "3C", "4C", "5C", "6C", "7C", "8C", "9C", "10C", "JC", "QC", "KC",
+                        "AD", "2D", "3D", "4D", "5D", "6D", "7D", "8D", "9D", "10D", "JD", "QD", "KD"];
+        this.cards = [];
+        //shuffle method
+        DeckConstructor.prototype.shuffle = function(){
+          this.mix = this.deck[Math.floor(Math.random() * this.deck.length)]; //returns random card in deck
+          return this.mix;
+        }
+        //reset method
+
+        //deal method - to deal random card
+          //method should return the card that was dealt and remove it from stack
+        DeckConstructor.prototype.deal = function(){
+          this.card = this.shuffle();
+
+          console.log("Random card pulled: " + this.card + " Number of cards in deck: " + this.deck.length);
+
+          for(var idx = 0; idx < this.deck.length; idx++)
+          {
+            if(this.card == this.deck[idx]){
+              this.cards.push(this.deck[idx]);
+              this.deck.splice(idx, 1); //remove card from deck
+            }
+            else{
+              console.log("Not your card");
+            }
+          }
+            console.log(this.cards);
+            console.log(this.deck.length); //returns the remainder of cards
+        }
+
+        DeckConstructor.prototype.displayHand = function(){
+          console.log(this.cards);
+        }
+      }
+
+      function PlayerConstructor(name){
+        DeckConstructor.call(this);
+
+        //player should have a name
+        this.name = name;
+        //player should have a hand of cards
+        this.hand = [];
+        //Player should be able to take a card using deck.deal method
+        PlayerConstructor.prototype.deal = function(){
+          console.log(this.deck.length);
+        }
+        //player should be able to discard a card
+        PlayerConstructor.prototype.discard = function(){
+          this.hand.splice(1, 1);
+        }
+      }
+
+      //Create GameRules function to describe the rules of the game...push the dealt cards to the player.
+      var random = new DeckConstructor();
+      var Tiffany = new PlayerConstructor("Tiffany");
+
+      Tiffany.hand.push(random.deal(), random.deal(), random.deal(), random.deal(), random.deal());
+      Tiffany.hand.splice(2, 1, random.deal(), random.deal(), random.deal(), random.deal());
+      random.displayHand();
+
+    </script>
+  </head>
+</html>
